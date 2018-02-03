@@ -41,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
+                    .antMatchers("/webjars/**", "/webjars/").permitAll()
                     .antMatchers("/login*", "/user/registration", "/h2-console/**").anonymous()
                     .anyRequest().authenticated()
                     .and()

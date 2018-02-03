@@ -3,43 +3,51 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Registration</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h1 th:text="#{label.form.title}">form</h1>
-<form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
-    <div>
-        <p th:each="error : ${#fields.globalErrors()}"
-           th:text="${error}">Global Error</p>
-        <label th:text="#{label.user.firstName}">first</label>
-        <input th:field="*{firstName}"/>
-        <p th:each="error: ${#fields.errors('firstName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.lastName}">last</label>
-        <input th:field="*{lastName}"/>
-        <p th:each="error : ${#fields.errors('lastName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.email}">email</label>
-        <input th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.password}">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.confirmPass}">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
-    </div>
-    <button type="submit" th:text="#{label.form.submit}">register</button>
-</form>
+<div class="container" style="margin-top: 25px;">
 
-<a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+    <p class="text-center h1" th:text="#{label.form.title}">form</p>
+    <form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="inputName" th:text="#{label.user.firstName}">first</label>
+            <input id="inputName" class="form-control" placeholder="Input first name" th:field="*{firstName}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('firstName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="form-group">
+            <label for="inputLastName" th:text="#{label.user.lastName}">last</label>
+            <input id="inputLastName" class="form-control" placeholder="Input last name" th:field="*{lastName}"/>
+            <p class="form-text text-danger"
+               th:each="error : ${#fields.errors('lastName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" th:text="#{label.user.email}">last</label>
+            <input id="inputEmail" class="form-control" placeholder="Input email" th:field="*{email}"/>
+            <p class="form-text text-danger"
+               th:each="error : ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="form-group">
+            <label for="inputPass1" th:text="#{label.user.password}">last</label>
+            <input type="password" id="inputPass1" class="form-control" placeholder="Input password" th:field="*{password}"/>
+            <p class="form-text text-danger"
+               th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div class="form-group">
+            <label for="inputPass2" th:text="#{label.user.confirmPass}">last</label>
+            <input type="password" id="inputPass2" class="form-control" placeholder="Confirm password" th:field="*{matchingPassword}"/>
+        </div>
+        <button type="submit" style="margin-bottom: 25px;" th:text="#{label.form.submit}">register</button>
+    </form>
+
+    <a th:href="@{/login}" th:text="#{label.form.loginLink}">login</a>
+</div>
 </body>
 </html>
