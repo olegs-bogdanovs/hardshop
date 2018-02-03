@@ -4,6 +4,10 @@ import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
 import lv.tsi.olegsbogdanovs.hardshop.validation.EmailExistsException;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.UserDto;
 
+import java.util.List;
+
 public interface UserService {
-    public User registerNewUser(UserDto userDto) throws EmailExistsException;
+    User registerNewUser(UserDto userDto) throws EmailExistsException;
+    List<User> getNotAdminUsers();
+    void removeUser(Long id);
 }

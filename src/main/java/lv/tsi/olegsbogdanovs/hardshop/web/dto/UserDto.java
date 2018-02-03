@@ -1,5 +1,6 @@
 package lv.tsi.olegsbogdanovs.hardshop.web.dto;
 
+import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Role;
 import lv.tsi.olegsbogdanovs.hardshop.validation.PasswordMatches;
 import lv.tsi.olegsbogdanovs.hardshop.validation.ValidEmail;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,8 @@ public class UserDto {
     @Size(min=8, max=30)
     private String password;
     private String matchingPassword;
+
+    private Role role;
 
     @NotNull
     @ValidEmail
@@ -62,5 +65,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

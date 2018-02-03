@@ -41,15 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                    .antMatchers("/webjars/**", "/webjars/").permitAll()
+                    .antMatchers("/admin/**").hasAuthority("ADMIN")
+                    .antMatchers("/webjars/**", "/").permitAll()
                     .antMatchers("/login*", "/user/registration", "/h2-console/**").anonymous()
-                    .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
                     .and()
                 .logout()
+                .logoutSuccessUrl("/")
                     .permitAll();
 
         httpSecurity.csrf().disable();
