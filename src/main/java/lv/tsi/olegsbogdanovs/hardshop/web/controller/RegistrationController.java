@@ -5,7 +5,6 @@ import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
 import lv.tsi.olegsbogdanovs.hardshop.service.UserService;
 import lv.tsi.olegsbogdanovs.hardshop.validation.EmailExistsException;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.UserDto;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
