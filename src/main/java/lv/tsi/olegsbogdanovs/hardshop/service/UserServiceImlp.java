@@ -4,7 +4,10 @@ import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.UserDao;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Role;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
 import lv.tsi.olegsbogdanovs.hardshop.validation.EmailExistsException;
+import lv.tsi.olegsbogdanovs.hardshop.web.controller.AdminController;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.UserDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,8 @@ public class UserServiceImlp implements UserService{
 
     private UserDao userDao;
     private PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImlp.class);
+
 
     public UserServiceImlp(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
@@ -43,6 +48,19 @@ public class UserServiceImlp implements UserService{
         return users;
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
+        userDao.findAll().forEach(users::add);
+        return users;
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        logger.info(id.toString());
+        User user = userDao.findOne(id);
+        return user;
+    }
 
     @Transactional
     @Override

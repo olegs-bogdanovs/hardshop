@@ -9,5 +9,4 @@ import java.util.Optional;
 public interface UserDao extends CrudRepository<User, Long>{
     Optional<User> findUserByEmail(String string);
     Iterable<User> findAllByRoleNot(Role role);
-
 }
