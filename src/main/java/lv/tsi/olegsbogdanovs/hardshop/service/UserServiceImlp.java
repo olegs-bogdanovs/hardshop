@@ -49,6 +49,12 @@ public class UserServiceImlp implements UserService{
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        Optional<User> userOptional = userDao.findUserByEmail(email);
+        return userOptional.isPresent()? userOptional.get() : null;
+    }
+
+    @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         userDao.findAll().forEach(users::add);
@@ -60,6 +66,12 @@ public class UserServiceImlp implements UserService{
         logger.info(id.toString());
         User user = userDao.findOne(id);
         return user;
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(User user) {
+        userDao.save(user);
     }
 
     @Transactional

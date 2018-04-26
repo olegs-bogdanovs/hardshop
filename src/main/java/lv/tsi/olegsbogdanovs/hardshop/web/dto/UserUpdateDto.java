@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserUpdateDto {
+    private Long id;
+
     @NotNull
     @Size(min=2, max=30)
     private String firstName;
@@ -17,9 +19,17 @@ public class UserUpdateDto {
 
     private Role role;
 
-    @NotNull
-    @ValidEmail
+//    @NotNull
+//    @ValidEmail
     private String email;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -56,7 +66,8 @@ public class UserUpdateDto {
     @Override
     public String toString() {
         return "UserUpdateDto{" +
-                "firstName='" + firstName + '\'' +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", role=" + role +
                 ", email='" + email + '\'' +

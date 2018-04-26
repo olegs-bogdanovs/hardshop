@@ -45,13 +45,32 @@ public class AdminController extends WebMvcConfigurerAdapter {
     @GetMapping("/admin/user/{userId}/modify")
     public String modifyAnyUserView(Model model, @PathVariable String userId){
         User user = userService.getUserById(Long.parseLong(userId));
-        UserUpdateDto userDto = new UserUpdateDto();
-        userDto.setEmail(user.getEmail());
-        userDto.setFirstName(user.getName());
-        userDto.setLastName(user.getSurname());
-        userDto.setRole(user.getRole());
-        model.addAttribute("user", userDto);
+        UserUpdateDto userUpdateDto = new UserUpdateDto();
+        userUpdateDto.setEmail(user.getEmail());
+        userUpdateDto.setFirstName(user.getName());
+        userUpdateDto.setLastName(user.getSurname());
+        userUpdateDto.setRole(user.getRole());
+        model.addAttribute("user", userUpdateDto);
         return "admin/user_update";
+    }
+
+    @PostMapping("/admin/user/{userId}/modify")
+    public String modifyUserAccount(@ModelAttribute("user") @Valid UserUpdateDto userUpdateDto,
+                                   @PathVariable String userId,
+                                   BindingResult bindingResult){
+        logger.info (userUpdateDto == null? "NULL": userUpdateDto.toString());
+        User user = userService.getUserById(Long.parseLong(userId));
+        if (!bindingResult.hasErrors() && user != null){
+            user.setName(userUpdateDto.getFirstName());
+            user.setSurname(userUpdateDto.getLastName());
+            user.setRole(userUpdateDto.getRole());
+            userService.updateUser(user);
+        }
+        if (bindingResult.hasErrors()) {
+            return "admin/user_update";
+        } else {
+            return "redirect:/admin";
+        }
     }
 
     @PostMapping("/admin/user/create")

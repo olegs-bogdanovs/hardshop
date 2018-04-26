@@ -9,7 +9,9 @@ import java.util.List;
 public interface UserService {
     User registerNewUser(UserDto userDto) throws EmailExistsException;
     User getUserById(Long id);
+    User getUserByEmail(String email);
     List<User> getNotAdminUsers();
     List<User> getAllUsers();
     void removeUser(Long id);
+    void updateUser(User user);
 }

@@ -31,7 +31,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         User admin = new User();
         admin.setName("admin");
         admin.setSurname("admin");
-        admin.setEmail("admin");
+        admin.setEmail("admin@admin.com");
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRole(Role.ADMIN);
         userDao.save(admin);
@@ -39,7 +39,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         User user = new User();
         user.setName("user");
         user.setSurname("user");
-        user.setEmail("user");
+        user.setEmail("user@user.com");
         user.setPassword(passwordEncoder.encode("user"));
         user.setRole(Role.CUSTOMER);
         userDao.save(user);
@@ -47,7 +47,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         User buh = new User();
         buh.setName("buh");
         buh.setSurname("buh");
-        buh.setEmail("buh");
+        buh.setEmail("buh@buh.com");
         buh.setPassword(passwordEncoder.encode("buh"));
         buh.setRole(Role.ACCOUNTANT);
         userDao.save(buh);
@@ -55,7 +55,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         User worker = new User();
         worker.setName("worker");
         worker.setSurname("worker");
-        worker.setEmail("worker");
+        worker.setEmail("worker@worker.com");
         worker.setPassword(passwordEncoder.encode("worker"));
         worker.setRole(Role.WORKER);
         userDao.save(worker);

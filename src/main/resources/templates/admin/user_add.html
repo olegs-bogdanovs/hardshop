@@ -20,9 +20,9 @@
             <select id="role" class="form-control" th:field="*{role}">
                 <option th:each="role : ${T(lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Role).values()}" th:value="${role}" th:text="${role}">Segmentos</option>
             </select>
-            <p class="form-text text-danger"
-               th:each="error: ${#fields.errors('firstName')}"
-               th:text="${error}">Validation error</p>
+            <!--<p class="form-text text-danger"-->
+               <!--th:each="error: ${#fields.errors('firstName')}"-->
+               <!--th:text="${error}">Validation error</p>-->
         </div>
 
         <div class="form-group">
