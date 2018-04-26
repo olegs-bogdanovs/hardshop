@@ -67,24 +67,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         worker.setRole(Role.WORKER);
         userDao.save(worker);
 
-        //Add Parameters
-        Set<Parameter> parameters = new HashSet<>();
-        Parameter cap = new Parameter();
-        cap.setName("capacity");
-        cap.setDesc("Capacity");
-        parameters.add(cap);
 
-        Parameter manuf = new Parameter();
-        manuf.setName("manufacturer");
-        manuf.setDesc("Manufacturer");
-        parameters.add(manuf);
-
-        Parameter count = new Parameter();
-        count.setName("Count");
-        count.setDesc("Count");
-        parameters.add(count);
-
-        parameterDao.save(parameters);
 
     }
 }

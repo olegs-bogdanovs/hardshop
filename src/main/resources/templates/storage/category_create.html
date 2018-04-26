@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Category Create</title>
+    <th:block th:include="storage/fragments/header :: header"/>
+</head>
+<body>
+<th:block th:include="storage/fragments/menu :: menu"/>
+<p class="text-center h1">Category Create</p>
+<div class="container" style="margin-top: 25px;">
+
+    <form th:action="@{'/storage/category'}" th:object="${category}" method="POST" enctype="utf8">
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+
+            <label for="name">Parameter Name</label>
+            <input id="name" class="form-control" placeholder="Input category name" th:field="*{name}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('name')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="desc">Parameter Description</label>
+            <input id="desc" class="form-control" placeholder="Input category description" th:field="*{desc}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('desc')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <button type="submit" style="margin-bottom: 25px;">Create</button>
+    </form>
+</div>
+</body>
+</html>

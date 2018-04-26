@@ -1,6 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,15 +16,59 @@ public class Category {
     private String desc;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
-    private Set<Item> items;
+    private Set<Item> items = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name="category_parameter",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "parameter_id"))
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    private Set<Parameter> parameters = new HashSet<>();
 
-    private Set<Parameter> parameters;
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
+    }
+
+    public Set<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Set<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", items=" + items +
+                ", parameters=" + parameters +
+                '}';
+    }
 }
