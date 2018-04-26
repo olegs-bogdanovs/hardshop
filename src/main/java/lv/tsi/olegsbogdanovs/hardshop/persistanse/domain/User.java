@@ -1,6 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class User {
     private Role role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<Cart> carts;
+    private Set<Cart> carts = new HashSet<>();
 
     public Long getId() {
         return id;

@@ -1,6 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,12 +11,17 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private List<Parameter> parameters;
     private Integer quantity;
     private String name;
 
+    @ManyToMany
+    @JoinTable(name="item_cart",
+            joinColumns = @JoinColumn(name = "item_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    private Set<Cart> carts = new HashSet<>();
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    private Set<ItemParameterValue> itemParameterValues;
+    private Set<ItemParameterValue> itemParameterValues = new HashSet<>();
 
     @Lob
     private Byte[] image;
@@ -23,59 +29,8 @@ public class Item {
     @ManyToOne
     private Category category;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public List<Parameter> getParameters() {
-        return parameters;
-    }
 
-    public void setParameters(List<Parameter> parameters) {
-        this.parameters = parameters;
-    }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<ItemParameterValue> getItemParameterValues() {
-        return itemParameterValues;
-    }
-
-    public void setItemParameterValues(Set<ItemParameterValue> itemParameterValues) {
-        this.itemParameterValues = itemParameterValues;
-    }
-
-    public Byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(Byte[] image) {
-        this.image = image;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 }

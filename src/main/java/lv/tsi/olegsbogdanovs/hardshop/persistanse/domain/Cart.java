@@ -1,6 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Cart {
@@ -11,8 +12,8 @@ public class Cart {
     @ManyToOne
     private User user;
 
-
-    private List<Item> items;
+    @ManyToMany(mappedBy = "carts")
+    private Set<Item> items;
 
     @Enumerated(EnumType.STRING)
     private CartStatus status;
@@ -33,11 +34,11 @@ public class Cart {
         this.user = user;
     }
 
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 

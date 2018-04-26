@@ -10,13 +10,12 @@ public class Parameter {
     private Long id;
 
     private String name;
-    private String value;
     private String desc;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameter")
     private Set<ItemParameterValue> itemParameterValues;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "parameters")
     private Set<Category> categories;
 
     public Long getId() {
@@ -35,13 +34,6 @@ public class Parameter {
         this.name = name;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 
     public String getDesc() {
         return desc;
@@ -65,5 +57,16 @@ public class Parameter {
 
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public String toString() {
+        return "Parameter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", itemParameterValues=" + itemParameterValues +
+                ", categories=" + categories +
+                '}';
     }
 }

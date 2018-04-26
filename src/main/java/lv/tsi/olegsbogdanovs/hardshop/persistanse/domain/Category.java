@@ -18,46 +18,12 @@ public class Category {
     private Set<Item> items;
 
     @ManyToMany
+    @JoinTable(name="category_parameter",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "parameter_id"))
+
     private Set<Parameter> parameters;
 
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public Set<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<Item> items) {
-        this.items = items;
-    }
-
-    public Set<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Set<Parameter> parameters) {
-        this.parameters = parameters;
-    }
 }
