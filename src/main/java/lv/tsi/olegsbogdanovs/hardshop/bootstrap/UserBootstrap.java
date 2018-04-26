@@ -62,7 +62,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         User worker = new User();
         worker.setName("worker");
         worker.setSurname("worker");
-        worker.setEmail("worker@worker.com");
+        worker.setEmail("worker");
         worker.setPassword(passwordEncoder.encode("worker"));
         worker.setRole(Role.WORKER);
         userDao.save(worker);
