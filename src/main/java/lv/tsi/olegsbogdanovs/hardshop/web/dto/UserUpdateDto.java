@@ -5,8 +5,14 @@ import lv.tsi.olegsbogdanovs.hardshop.validation.ValidEmail;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserUpdateDto {
+    public UserUpdateDto() {
+        longSet.add(3L);
+    }
+
     private Long id;
 
     @NotNull
@@ -18,6 +24,8 @@ public class UserUpdateDto {
     private String lastName;
 
     private Role role;
+
+    private Set<Long> longSet = new HashSet<>();
 
 //    @NotNull
 //    @ValidEmail
@@ -70,6 +78,7 @@ public class UserUpdateDto {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", role=" + role +
+                ", longSet=" + longSet +
                 ", email='" + email + '\'' +
                 '}';
     }

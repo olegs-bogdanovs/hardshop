@@ -50,6 +50,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
         userUpdateDto.setFirstName(user.getName());
         userUpdateDto.setLastName(user.getSurname());
         userUpdateDto.setRole(user.getRole());
+        userUpdateDto.setId(user.getId());
         model.addAttribute("user", userUpdateDto);
         return "admin/user_update";
     }

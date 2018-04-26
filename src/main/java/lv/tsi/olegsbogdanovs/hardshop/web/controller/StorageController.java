@@ -30,8 +30,10 @@ public class StorageController extends WebMvcConfigurerAdapter {
         return "storage/parameter_create";
     }
 
-//    @PostMapping("/admin/user/create")
-//    public String registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult){
+//    @PostMapping("/storage/parameter")
+//    public String saveUpdateParameter(@ModelAttribute("paramter") @Valid ParameterDto parameterDto,
+//                                      BindingResult bindingResult){
+//
 //        User registeredUser = new User();
 //        if (!bindingResult.hasErrors()){
 //            registeredUser = createUserAccount(userDto, bindingResult);
