@@ -1,6 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -17,6 +18,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Cart> carts;
 
     public Long getId() {
         return id;
@@ -64,5 +68,13 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 }
