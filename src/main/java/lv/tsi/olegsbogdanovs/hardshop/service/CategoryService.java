@@ -45,6 +45,14 @@ public class CategoryService {
         return categoryToCategoryDto.convert(category);
     }
 
+    public Category findById(Long id){
+        Category category = categoryDao.findOne(id);
+        if (category == null){
+            throw new NotFoundException("Category Not Found. For ID value: " + id.toString());
+        }
+        return category;
+    }
+
     public Set<Category> getCategories(){
         Set<Category> categories = new HashSet<>();
         categoryDao.findAll().forEach(categories::add);

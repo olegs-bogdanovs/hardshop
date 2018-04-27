@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Item Show</title>
+    <th:block th:include="storage/fragments/header :: header"/>
+</head>
+<body>
+<th:block th:include="storage/fragments/menu :: menu"/>
+<div class="container" style="margin-top: 25px;">
+    <p class="text-center h1">Item Create</p>
+
+    <form th:action="@{'/storage/item/'}" th:object="${item}" method="POST" enctype="utf8">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{categoryId}"/>
+
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="name">Item Name</label>
+            <input id="name" class="form-control" placeholder="Input item name" th:field="*{name}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('name')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="desc">Item Description</label>
+            <input id="desc" class="form-control" placeholder="Input item Description" th:field="*{desc}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('desc')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="quantity">Quantity</label>
+            <input id="quantity" class="form-control" placeholder="Input item Description" th:field="*{quantity}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('quantity')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
+        <button type="submit" style="margin-bottom: 25px;">Update</button>
+    </form>
+</div>
+</body>
+</html>

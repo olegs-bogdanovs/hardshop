@@ -98,11 +98,22 @@ public class StorageController extends WebMvcConfigurerAdapter {
             return "storage/item/create";
         }
 
-        CategoryDto categoryDto = categoryService.findDtoById(itemDto.getCategoryId());
         ItemDto savedItemDto = itemService.saveItemDto(itemDto);
-        categoryDto.getItems().add(savedItemDto);
-        categoryService.saveCategoryDto(categoryDto);
-
         return "redirect:/storage/item/" + savedItemDto.getId() + "/show";
     }
+
+
+    @GetMapping("/storage/item/{id}/show")
+    public String showItem(Model model, @PathVariable Long id){
+        ItemDto itemDto = itemService.findDtoById(id);
+        model.addAttribute("item", itemDto);
+        return "storage/item_show";
+    }
+
+    @GetMapping("/storage/item/list")
+    public String listItem(Model model){
+        model.addAttribute("items", itemService.getItems());
+        return "storage/item_list";
+    }
+
 }

@@ -18,12 +18,14 @@ import java.util.Set;
 
 @Service
 public class ItemService {
+    private final CategoryService categoryService;
     private final ItemDao itemDao;
     private final ItemToItemDto itemToItemDto;
     private final ItemDtoToItem itemDtoToItem;
     private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 
-    public ItemService(ItemDao itemDao, ItemToItemDto itemToItemDto, ItemDtoToItem itemDtoToItem) {
+    public ItemService(CategoryService categoryService, ItemDao itemDao, ItemToItemDto itemToItemDto, ItemDtoToItem itemDtoToItem) {
+        this.categoryService = categoryService;
         this.itemDao = itemDao;
         this.itemToItemDto = itemToItemDto;
         this.itemDtoToItem = itemDtoToItem;
@@ -32,6 +34,9 @@ public class ItemService {
     @Transactional
     public ItemDto saveItemDto(ItemDto itemDto){
         Item detachedItem = itemDtoToItem.convert(itemDto);
+        if (itemDto.getCategoryId() != null){
+            detachedItem.setCategory(categoryService.findById(itemDto.getCategoryId()));
+        }
         Item savedItem = itemDao.save(detachedItem);
         return itemToItemDto.convert(savedItem);
     }
