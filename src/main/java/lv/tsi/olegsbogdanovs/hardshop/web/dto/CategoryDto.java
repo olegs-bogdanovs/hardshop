@@ -1,8 +1,8 @@
 package lv.tsi.olegsbogdanovs.hardshop.web.dto;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CategoryDto {
     private Long id;
@@ -12,7 +12,7 @@ public class CategoryDto {
     private String desc;
 
 //    private Set<Item> items = new HashSet<>();
-//    private Set<Parameter> parameters = new HashSet<>();
+    private Set<ParameterDto> parameters = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -36,6 +36,14 @@ public class CategoryDto {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Set<ParameterDto> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Set<ParameterDto> parameters) {
+        this.parameters = parameters;
     }
 
     @Override

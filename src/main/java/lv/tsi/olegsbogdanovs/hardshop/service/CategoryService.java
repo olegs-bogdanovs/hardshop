@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CategoryService {
@@ -41,5 +43,11 @@ public class CategoryService {
             throw new NotFoundException("Category Not Found. For ID value: " + id.toString());
         }
         return categoryToCategoryDto.convert(category);
+    }
+
+    public Set<Category> getCategories(){
+        Set<Category> categories = new HashSet<>();
+        categoryDao.findAll().forEach(categories::add);
+        return categories;
     }
 }

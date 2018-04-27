@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
+import java.lang.reflect.Parameter;
 
 @Controller
 public class StorageController extends WebMvcConfigurerAdapter {
@@ -29,12 +30,6 @@ public class StorageController extends WebMvcConfigurerAdapter {
     @GetMapping("/storage")
     public String getAdminView(Model model){
         return "storage/storage";
-    }
-
-    @GetMapping("/storage/parameter/create")
-    public String createParameter(Model model){
-        model.addAttribute("parameter", new ParameterDto());
-        return "storage/parameter_create";
     }
 
     @GetMapping("/storage/category/create")
@@ -59,5 +54,30 @@ public class StorageController extends WebMvcConfigurerAdapter {
         return "storage/category_show";
     }
 
+    @GetMapping("/storage/category/list")
+    public String categoryShow(Model model){
+        model.addAttribute("categories", categoryService.getCategories());
+        return "storage/category_list";
+    }
 
+    @GetMapping("/storage/parameter/{categoryId}/create")
+    public String createParameter(Model model, @PathVariable Long categoryId){
+        CategoryDto categoryDto = categoryService.findDtoById(categoryId);
+        ParameterDto parameterDto = new ParameterDto();
+        parameterDto.setCategoryId(categoryDto.getId());
+        model.addAttribute("parameter", parameterDto);
+        return "storage/parameter_create";
+    }
+
+    @PostMapping("/storage/parameter")
+    public String parameterSave(@ModelAttribute("parameter") ParameterDto parameterDto,
+                                     BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "storage/parameter/" + parameterDto.getCategoryId() + "/create";
+        }
+        CategoryDto categoryDto = categoryService.findDtoById(parameterDto.getCategoryId());
+        categoryDto.getParameters().add(parameterDto);
+        CategoryDto savedCategoryDto = categoryService.saveCategoryDto(categoryDto);
+        return "redirect:/storage/category/" + savedCategoryDto.getId() + "/show";
+    }
 }

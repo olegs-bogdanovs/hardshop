@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryToCategoryDto implements Converter<Category, CategoryDto> {
+    private ParameterToParameterDto parameterConverter;
+
+
+    public CategoryToCategoryDto(ParameterToParameterDto parameterConverter) {
+        this.parameterConverter = parameterConverter;
+    }
 
     @Override
     public synchronized CategoryDto convert(Category source) {
@@ -14,6 +20,13 @@ public class CategoryToCategoryDto implements Converter<Category, CategoryDto> {
         category.setId(source.getId());
         category.setName(source.getName());
         category.setDesc(source.getDesc());
+
+        if(source.getParameters() != null && source.getParameters().size() > 0){
+            source.getParameters().forEach(
+                    parameter -> category.getParameters().add(parameterConverter.convert(parameter))
+            );
+        }
+
         return category;
     }
 }

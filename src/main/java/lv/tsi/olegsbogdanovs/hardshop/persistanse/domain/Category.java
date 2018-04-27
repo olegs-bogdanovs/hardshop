@@ -57,9 +57,14 @@ public class Category {
         return parameters;
     }
 
-    public void setParameters(Set<Parameter> parameters) {
-        this.parameters = parameters;
+    public void addParameter(Parameter parameter){
+        parameters.add(parameter);
+        parameter.setCategory(this);
     }
+
+//    public void setParameters(Set<Parameter> parameters) {
+//        this.parameters = parameters;
+//    }
 
     @Override
     public String toString() {

@@ -15,7 +15,7 @@
         <div class="form-group">
             <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
 
-            <label for="name">Parameter Name</label>
+            <label for="name">Category Name</label>
             <input id="name" class="form-control" placeholder="Input category name" th:field="*{name}"/>
             <p class="form-text text-danger"
                th:each="error: ${#fields.errors('name')}"
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
-            <label for="desc">Parameter Description</label>
+            <label for="desc">Category Description</label>
             <input id="desc" class="form-control" placeholder="Input category description" th:field="*{desc}"/>
             <p class="form-text text-danger"
                th:each="error: ${#fields.errors('desc')}"

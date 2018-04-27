@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Category Show</title>
+    <th:block th:include="storage/fragments/header :: header"/>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#category_table').DataTable();
+        });
+    </script>
+</head>
+<body>
+<th:block th:include="storage/fragments/menu :: menu"/>
+<div class="container" style="margin-top: 25px;">
+    <p class="text-center h1">Category List</p>
+    <table id="category_table" class="display" style="width: 100%">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.id}">ID</td>
+            <td th:text="${category.name}">Name</td>
+            <td th:text="${category.desc}">Description</td>
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" th:onclick="|window.location.href='/storage/category/${category.id}/show'|">View</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

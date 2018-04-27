@@ -2,7 +2,6 @@ package lv.tsi.olegsbogdanovs.hardshop.web.dto;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.util.Objects;
 
 public class ParameterDto {
     private Long id;
@@ -12,6 +11,7 @@ public class ParameterDto {
     @Min(5)
     @Max(99)
     private String desc;
+    private Long categoryId;
 
     public Long getId() {
         return id;
@@ -37,20 +37,12 @@ public class ParameterDto {
         this.desc = desc;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParameterDto that = (ParameterDto) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(desc, that.desc);
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name, desc);
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Override
@@ -59,6 +51,7 @@ public class ParameterDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", desc='" + desc + '\'' +
+                ", categoryId=" + categoryId +
                 '}';
     }
 }
