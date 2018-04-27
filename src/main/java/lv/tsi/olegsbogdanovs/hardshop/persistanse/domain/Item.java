@@ -1,9 +1,7 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Item {
@@ -22,7 +20,7 @@ public class Item {
     private Set<Cart> carts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    private Set<ItemParameterValue> itemParameterValues = new HashSet<>();
+    private List<ItemParameterValue> itemParameterValues = new ArrayList<>();
 
     @Lob
     private Byte[] image;
@@ -62,13 +60,17 @@ public class Item {
         this.carts = carts;
     }
 
-    public Set<ItemParameterValue> getItemParameterValues() {
+    public List<ItemParameterValue> getItemParameterValues() {
         return itemParameterValues;
     }
 
-    public void setItemParameterValues(Set<ItemParameterValue> itemParameterValues) {
-        this.itemParameterValues = itemParameterValues;
+    public void addItemParameterValue(ItemParameterValue itemParameterValue){
+        this.itemParameterValues.add(itemParameterValue);
+        itemParameterValue.setItem(this);
     }
+//    public void setItemParameterValues(Set<ItemParameterValue> itemParameterValues) {
+//        this.itemParameterValues = itemParameterValues;
+//    }
 
     public Byte[] getImage() {
         return image;
@@ -93,4 +95,6 @@ public class Item {
     public void setDesc(String desc) {
         this.desc = desc;
     }
+
+
 }

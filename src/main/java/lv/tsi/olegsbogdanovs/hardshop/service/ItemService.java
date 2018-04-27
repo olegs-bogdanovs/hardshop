@@ -4,8 +4,10 @@ import lv.tsi.olegsbogdanovs.hardshop.converters.ItemDtoToItem;
 import lv.tsi.olegsbogdanovs.hardshop.converters.ItemToItemDto;
 import lv.tsi.olegsbogdanovs.hardshop.exceptions.NotFoundException;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.ItemDao;
+import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.ItemParameterValueDao;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Category;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Item;
+import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.ItemParameterValue;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.CategoryDto;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.ItemDto;
 import org.slf4j.Logger;
@@ -22,13 +24,15 @@ public class ItemService {
     private final ItemDao itemDao;
     private final ItemToItemDto itemToItemDto;
     private final ItemDtoToItem itemDtoToItem;
+    private final ItemParameterValueDao itemParameterValueDao;
     private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 
-    public ItemService(CategoryService categoryService, ItemDao itemDao, ItemToItemDto itemToItemDto, ItemDtoToItem itemDtoToItem) {
+    public ItemService(CategoryService categoryService, ItemDao itemDao, ItemToItemDto itemToItemDto, ItemDtoToItem itemDtoToItem, ItemParameterValueDao itemParameterValueDao) {
         this.categoryService = categoryService;
         this.itemDao = itemDao;
         this.itemToItemDto = itemToItemDto;
         this.itemDtoToItem = itemDtoToItem;
+        this.itemParameterValueDao = itemParameterValueDao;
     }
 
     @Transactional
@@ -38,15 +42,41 @@ public class ItemService {
             detachedItem.setCategory(categoryService.findById(itemDto.getCategoryId()));
         }
         Item savedItem = itemDao.save(detachedItem);
+
+        if (savedItem.getItemParameterValues().size() == 0){
+            savedItem.getCategory().getParameters().forEach(
+                    parameter -> {
+                        ItemParameterValue itemParameterValue = new ItemParameterValue();
+                        itemParameterValue.setItem(savedItem);
+                        itemParameterValue.setParameter(parameter);
+                        savedItem.addItemParameterValue(itemParameterValue);
+                    }
+            );
+        }
         return itemToItemDto.convert(savedItem);
     }
 
+    @Transactional
     public ItemDto findDtoById(Long id){
-        Item category = itemDao.findOne(id);
-        if (category == null){
+        Item item = itemDao.findOne(id);
+        if (item == null){
             throw new NotFoundException("Category Not Found. For ID value: " + id.toString());
         }
-        return itemToItemDto.convert(category);
+
+        if (item.getItemParameterValues().size() != item.getCategory().getParameters().size()){
+            item.getCategory().getParameters().forEach(
+                    parameter -> {
+                        ItemParameterValue itemParameterValue = itemParameterValueDao.findByParameterAndItem(parameter, item);
+                        if (itemParameterValue == null){
+                            itemParameterValue = new ItemParameterValue();
+                            itemParameterValue.setItem(item);
+                            itemParameterValue.setParameter(parameter);
+                            item.addItemParameterValue(itemParameterValueDao.save(itemParameterValue));
+                        }
+                    }
+            );
+        }
+        return itemToItemDto.convert(item);
     }
 
     public Set<Item> getItems(){

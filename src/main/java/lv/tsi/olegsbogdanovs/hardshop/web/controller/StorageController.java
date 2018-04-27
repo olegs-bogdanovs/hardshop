@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.validation.Valid;
-import java.lang.reflect.Parameter;
 
 @Controller
 public class StorageController extends WebMvcConfigurerAdapter {
@@ -95,9 +94,8 @@ public class StorageController extends WebMvcConfigurerAdapter {
     @PostMapping("/storage/item")
     public String itemSave(@Valid @ModelAttribute("item") ItemDto itemDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "storage/item/create";
+            return "storage/item_create";
         }
-
         ItemDto savedItemDto = itemService.saveItemDto(itemDto);
         return "redirect:/storage/item/" + savedItemDto.getId() + "/show";
     }

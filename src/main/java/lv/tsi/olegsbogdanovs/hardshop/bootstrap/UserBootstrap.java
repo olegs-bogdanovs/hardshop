@@ -83,8 +83,8 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         cpu_cat.addParameter(cpu_cores);
 
         Parameter cpu_arch = new Parameter();
-        cpu_arch.setName("Archetecture");
-        cpu_arch.setDesc("Archetecrure of CPU");
+        cpu_arch.setName("Architecture");
+        cpu_arch.setDesc("Architecture of CPU");
         cpu_cat.addParameter(cpu_arch);
 
         categoryDao.save(cpu_cat);

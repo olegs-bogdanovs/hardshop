@@ -71,14 +71,5 @@ public class Category {
 //        this.parameters = parameters;
 //    }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
-                ", items=" + items +
-                ", parameters=" + parameters +
-                '}';
-    }
+
 }

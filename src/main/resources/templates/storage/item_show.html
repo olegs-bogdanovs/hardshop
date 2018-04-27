@@ -42,6 +42,19 @@
                th:text="${error}">Validation error</p>
         </div>
 
+        <div th:each="value, rowStat: *{values}">
+            <div class="form-group">
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].parameter.name}"/>
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].parameter.id}"/>
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].parameter.categoryId}"/>
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].parameter.desc}"/>
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].id}"/>
+                <input type="hidden" th:field="*{values[__${rowStat.index}__].itemId}"/>
+                <label for="value" th:text="${value.parameter.name}"></label>
+                <input id="value" class="form-control" placeholder="Input item Description" th:field="*{values[__${rowStat.index}__].value}"/>
+            </div>
+        </div>
+
         <button type="submit" style="margin-bottom: 25px;">Update</button>
     </form>
 </div>

@@ -7,6 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ItemDtoToItem implements Converter<ItemDto, Item> {
+    private final IPVDtoToIPV ipvconverter;
+
+    public ItemDtoToItem(IPVDtoToIPV ipvconverter) {
+        this.ipvconverter = ipvconverter;
+    }
+
     @Override
     public Item convert(ItemDto source) {
         Item item = new Item();
@@ -14,6 +20,9 @@ public class ItemDtoToItem implements Converter<ItemDto, Item> {
         item.setName(source.getName());
         item.setQuantity(source.getQuantity());
         item.setDesc(source.getDesc());
+        if (source.getValues() != null && source.getValues().size() > 0){
+            source.getValues().forEach(value -> item.addItemParameterValue(ipvconverter.convert(value)));
+        }
         return item;
     }
 }
