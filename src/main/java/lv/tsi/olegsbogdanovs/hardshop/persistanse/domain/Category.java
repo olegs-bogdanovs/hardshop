@@ -49,9 +49,14 @@ public class Category {
         return items;
     }
 
-    public void setItems(Set<Item> items) {
-        this.items = items;
+    public void addItem(Item item){
+        items.add(item);
+        item.setCategory(this);
     }
+
+//    public void setItems(Set<Item> items) {
+//        this.items = items;
+//    }
 
     public Set<Parameter> getParameters() {
         return parameters;

@@ -1,12 +1,10 @@
 package lv.tsi.olegsbogdanovs.hardshop.bootstrap;
 
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.CategoryDao;
+import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.ItemDao;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.ParameterDao;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.dao.UserDao;
-import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Category;
-import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Parameter;
-import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Role;
-import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
+import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.*;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,15 +19,16 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
     private final UserDao userDao;
     private final ParameterDao parameterDao;
     private final CategoryDao categoryDao;
+    private final ItemDao itemDao;
     private PasswordEncoder passwordEncoder;
 
 
-    public UserBootstrap(UserDao userDao, PasswordEncoder passwordEncoder, ParameterDao parameterDao,
-                         CategoryDao categoryDao) {
+    public UserBootstrap(UserDao userDao, ParameterDao parameterDao, CategoryDao categoryDao, ItemDao itemDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
-        this.passwordEncoder = passwordEncoder;
         this.parameterDao = parameterDao;
         this.categoryDao = categoryDao;
+        this.itemDao = itemDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -107,6 +106,13 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
 
         categoryDao.save(ram_cat);
 
+        //Item Intel i5
+        Item itemI5 = new Item();
+        itemI5.setCategory(cpu_cat);
+        itemI5.setName("Intel i5");
+        itemI5.setQuantity(12);
+        itemI5.setDesc("Intel processor");
+        itemDao.save(itemI5);
 
     }
 }

@@ -8,9 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CategoryDtoToCategory implements Converter<CategoryDto, Category>{
     private ParameterDtoToParameter parameterConverter;
+    private ItemDtoToItem itemConverter;
 
-    public CategoryDtoToCategory(ParameterDtoToParameter parameterConverter) {
+
+    public CategoryDtoToCategory(ParameterDtoToParameter parameterConverter, ItemDtoToItem itemConverter) {
         this.parameterConverter = parameterConverter;
+        this.itemConverter = itemConverter;
     }
 
     @Override
@@ -23,6 +26,11 @@ public class CategoryDtoToCategory implements Converter<CategoryDto, Category>{
         if (source.getParameters() != null && source.getParameters().size() > 0){
             source.getParameters().forEach(parameterDto ->
                     category.addParameter(parameterConverter.convert(parameterDto)));
+        }
+
+        if (source.getItems() != null && source.getItems().size() >0){
+            source.getItems().forEach(itemDto ->
+                    category.addItem(itemConverter.convert(itemDto)));
         }
         return category;
     }

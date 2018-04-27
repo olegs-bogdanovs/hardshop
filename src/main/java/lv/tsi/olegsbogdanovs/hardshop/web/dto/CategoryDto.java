@@ -11,7 +11,7 @@ public class CategoryDto {
     @Size(min=2, max=30)
     private String desc;
 
-//    private Set<Item> items = new HashSet<>();
+    private Set<ItemDto> items = new HashSet<>();
     private Set<ParameterDto> parameters = new HashSet<>();
 
     public Long getId() {
@@ -44,6 +44,14 @@ public class CategoryDto {
 
     public void setParameters(Set<ParameterDto> parameters) {
         this.parameters = parameters;
+    }
+
+    public Set<ItemDto> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<ItemDto> items) {
+        this.items = items;
     }
 
     @Override

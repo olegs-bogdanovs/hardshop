@@ -3,7 +3,9 @@ package lv.tsi.olegsbogdanovs.hardshop.web.controller;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Category;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
 import lv.tsi.olegsbogdanovs.hardshop.service.CategoryService;
+import lv.tsi.olegsbogdanovs.hardshop.service.ItemService;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.CategoryDto;
+import lv.tsi.olegsbogdanovs.hardshop.web.dto.ItemDto;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.ParameterDto;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.UserDto;
 import org.slf4j.Logger;
@@ -21,10 +23,12 @@ import java.lang.reflect.Parameter;
 public class StorageController extends WebMvcConfigurerAdapter {
     private CategoryService categoryService;
     private static final Logger logger = LoggerFactory.getLogger(StorageController.class);
+    private ItemService itemService;
 
 
-    public StorageController(CategoryService categoryService){
+    public StorageController(CategoryService categoryService, ItemService itemService) {
         this.categoryService = categoryService;
+        this.itemService = itemService;
     }
 
     @GetMapping("/storage")
@@ -79,5 +83,26 @@ public class StorageController extends WebMvcConfigurerAdapter {
         categoryDto.getParameters().add(parameterDto);
         CategoryDto savedCategoryDto = categoryService.saveCategoryDto(categoryDto);
         return "redirect:/storage/category/" + savedCategoryDto.getId() + "/show";
+    }
+
+    @GetMapping("/storage/item/create")
+    public String createItem(Model model){
+        model.addAttribute("categories", categoryService.getCategories());
+        model.addAttribute("item", new ItemDto());
+        return "storage/item_create";
+    }
+
+    @PostMapping("/storage/item")
+    public String itemSave(@Valid @ModelAttribute("item") ItemDto itemDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "storage/item/create";
+        }
+
+        CategoryDto categoryDto = categoryService.findDtoById(itemDto.getCategoryId());
+        ItemDto savedItemDto = itemService.saveItemDto(itemDto);
+        categoryDto.getItems().add(savedItemDto);
+        categoryService.saveCategoryDto(categoryDto);
+
+        return "redirect:/storage/item/" + savedItemDto.getId() + "/show";
     }
 }
