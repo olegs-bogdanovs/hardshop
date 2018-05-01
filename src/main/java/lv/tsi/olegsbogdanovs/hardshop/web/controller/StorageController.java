@@ -7,7 +7,6 @@ import lv.tsi.olegsbogdanovs.hardshop.service.ItemService;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.CategoryDto;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.ItemDto;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.ParameterDto;
-import lv.tsi.olegsbogdanovs.hardshop.web.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

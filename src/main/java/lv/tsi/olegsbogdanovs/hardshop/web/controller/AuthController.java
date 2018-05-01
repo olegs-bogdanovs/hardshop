@@ -30,7 +30,7 @@ public class AuthController extends WebMvcConfigurerAdapter {
 
     @GetMapping("/")
     public String getIndex(){
-        return "index";
+        return "redirect:/shop";
     }
 
 

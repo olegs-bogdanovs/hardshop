@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello World!</title>
+</head>
+<body>
+
+<h1>Welcome to HardStore</h1>
+<div sec:authorize="!isAuthenticated()">
+    This content is only shown to authenticated users.
+</div>
+<!--Logged user: <span sec:authentication="name">Bob</span>-->
+<!--Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>-->
+</body>
+</html>
