@@ -9,11 +9,25 @@
 <body>
 <th:block th:include="shop/fragments/menu :: menu"/>
 <div class="container" style="margin-top: 25px;">
+
+    <div class="card-columns">
+        <div th:each="item: ${items}" class="card" style="width: 18rem;">
+            <img class="card-img-top" src="" alt="Card image cap"/>
+            <div class="card-body">
+                <h5 th:text="${item.name}" class="card-title">Card title</h5>
+                <p th:text="${item.desc}" class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary" th:onclick="|window.location.href='/shop/item/${item.id}'|">View</button>
+
+                    <form th:action="@{'/shop/cart/buy/' + ${item.id}}" method="post">
+                        <button type="submit" class="btn btn-secondary">Buy</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!--<div sec:authorize="!isAuthenticated()">-->
-    <!--This content is only shown to authenticated users.-->
-<!--</div>-->
-<!--Logged user: <span sec:authentication="name">Bob</span>-->
-<!--Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>-->
+
 </body>
 </html>

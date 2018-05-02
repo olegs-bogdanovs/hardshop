@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/storage/**").hasAuthority("WORKER")
                 .antMatchers("/webjars/**", "/").permitAll()
                 .antMatchers("/login*", "/user/registration", "/h2-console/**").anonymous()
+                .antMatchers("/shop/cart/**").authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")

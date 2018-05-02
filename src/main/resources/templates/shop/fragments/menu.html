@@ -2,9 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns="http://www.w3.org/1999/xhtml">
 <head>
-   <title>
-       Hello
-   </title>
+    <title>
+        Hello
+    </title>
 
 </head>
 <div th:fragment="menu">
@@ -15,10 +15,34 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="#" th:href="@{/storage}">Hardshop</a>
+            <a class="navbar-brand" href="#" th:href="@{/shop/category/0}">Hardshop</a>
+
             <div class="collapse navbar-collapse" id="nav-content">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            Categories
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="Preview">
+                            <div  th:each="category: ${categories}">
+                            <a th:text="${category.name}" class="dropdown-item" th:href="|/shop/category/${category.id}|">Add Item</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
                 <form class="form-inline" th:action="@{/logout}" method="post">
+                    <span class="navbar-text mr-sm-2" sec:authentication="name">element</span>
                     <button class="btn btn-outline-success" type="submit" value="Sign Out">Sign Out</button>
+                </form>
+            </div>
+            <div sec:authorize="!isAuthenticated()">
+                <form class="form-inline" th:action="@{/login}" method="get">
+                    <button class="btn btn-outline-success" type="submit" value="Sign In">Sign In</button>
+
                 </form>
             </div>
         </div>

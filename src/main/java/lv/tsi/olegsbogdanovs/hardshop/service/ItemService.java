@@ -85,4 +85,10 @@ public class ItemService {
         return items;
     }
 
+    public Set<Item> getItemsByCategoryId(Long id){
+        Set<Item> items = new HashSet<>();
+        itemDao.findItemsByCategoryId(id).forEach(items::add);
+        return items;
+    }
+
 }
