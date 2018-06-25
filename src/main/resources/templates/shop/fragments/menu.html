@@ -22,11 +22,22 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
+                            Cart
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="Preview">
+                            <a class="dropdown-item" th:href="@{/shop/cart/show}">Show cart</a>
+                            <a class="dropdown-item" th:href="@{/shop/cart/history}">History</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" id="Preview" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
                             Categories
                         </a>
                         <div class="dropdown-menu" aria-labelledby="Preview">
-                            <div  th:each="category: ${categories}">
-                            <a th:text="${category.name}" class="dropdown-item" th:href="|/shop/category/${category.id}|">Add Item</a>
+                            <div th:each="category: ${categories}">
+                                <a th:text="${category.name}" class="dropdown-item"
+                                   th:href="|/shop/category/${category.id}|">Add Item</a>
                             </div>
                         </div>
                     </li>

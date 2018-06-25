@@ -33,6 +33,37 @@ public class AuthController extends WebMvcConfigurerAdapter {
         return "redirect:/shop/category/0";
     }
 
+    @GetMapping("/user/registration")
+    public String getUserRegistrationFormView(Model model) {
+        model.addAttribute("user", new UserDto());
+        return "registration";
+    }
 
+    @PostMapping("/user/registration")
+    public String registerUser(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult) {
+        User registeredUser = new User();
+        userDto.setRole(Role.CUSTOMER);
+        if (!bindingResult.hasErrors()){
+            registeredUser = createUserAccount(userDto, bindingResult);
+        }
+        if (registeredUser == null){
+            bindingResult.rejectValue("email", "message.emailRegError");
+        }
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    private User createUserAccount(UserDto userDto, BindingResult bindingResult){
+        User registered = null;
+        try {
+            registered = userService.registerNewUser(userDto);
+        } catch (EmailExistsException e) {
+            return null;
+        }
+        return registered;
+    }
 
 }

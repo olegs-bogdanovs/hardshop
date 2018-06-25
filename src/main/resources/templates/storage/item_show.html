@@ -42,6 +42,15 @@
                th:text="${error}">Validation error</p>
         </div>
 
+        <div class="form-group">
+            <p th:each="error : ${#fields.globalErrors()}" th:text="${error}">Global Error</p>
+            <label for="price">Price</label>
+            <input id="price" class="form-control" placeholder="Input item Description" th:field="*{price}"/>
+            <p class="form-text text-danger"
+               th:each="error: ${#fields.errors('price')}"
+               th:text="${error}">Validation error</p>
+        </div>
+
         <div th:each="value, rowStat: *{values}">
             <div class="form-group">
                 <input type="hidden" th:field="*{values[__${rowStat.index}__].parameter.name}"/>

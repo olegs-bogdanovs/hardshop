@@ -20,6 +20,7 @@ public class ItemDtoToItem implements Converter<ItemDto, Item> {
         item.setName(source.getName());
         item.setQuantity(source.getQuantity());
         item.setDesc(source.getDesc());
+        item.setPrice(source.getPrice());
         if (source.getValues() != null && source.getValues().size() > 0){
             source.getValues().forEach(value -> item.addItemParameterValue(ipvconverter.convert(value)));
         }

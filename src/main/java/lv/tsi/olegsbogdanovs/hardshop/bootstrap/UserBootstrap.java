@@ -55,14 +55,6 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         user.setRole(Role.CUSTOMER);
         userDao.save(user);
 
-        User buh = new User();
-        buh.setName("buh");
-        buh.setSurname("buh");
-        buh.setEmail("buh@buh.com");
-        buh.setPassword(passwordEncoder.encode("buh"));
-        buh.setRole(Role.ACCOUNTANT);
-        userDao.save(buh);
-
         User worker = new User();
         worker.setName("worker");
         worker.setSurname("worker");
@@ -112,6 +104,7 @@ public class UserBootstrap implements ApplicationListener<ContextRefreshedEvent>
         itemI5.setName("Intel i5");
         itemI5.setQuantity(12);
         itemI5.setDesc("Intel processor");
+        itemI5.setPrice(350.21);
         itemDao.save(itemI5);
 
     }

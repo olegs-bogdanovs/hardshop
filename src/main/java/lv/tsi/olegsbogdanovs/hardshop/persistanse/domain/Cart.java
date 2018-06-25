@@ -1,5 +1,9 @@
 package lv.tsi.olegsbogdanovs.hardshop.persistanse.domain;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,8 +16,11 @@ public class Cart {
     @ManyToOne
     private User user;
 
-    @ManyToMany(mappedBy = "carts")
-    private Set<Item> items;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="item_cart",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<Item> items = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private CartStatus status;
@@ -34,11 +41,11 @@ public class Cart {
         this.user = user;
     }
 
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Set<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
 
@@ -48,5 +55,13 @@ public class Cart {
 
     public void setStatus(CartStatus status) {
         this.status = status;
+    }
+
+    public Double getItemTotalPrice(){
+        Double total = 0.0;
+        for (Item item: items){
+            total += item.getPrice();
+        }
+        return Math.round(total * 100) / 100.0;
     }
 }

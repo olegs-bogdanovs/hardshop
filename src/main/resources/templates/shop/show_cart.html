@@ -3,10 +3,8 @@
       xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Item List</title>
+    <title>Hardshop - Cart</title>
     <th:block th:include="storage/fragments/header :: header"/>
-    <script type="text/javascript" charset="utf8"
-            src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function () {
             $('#item_table').DataTable();
@@ -14,33 +12,30 @@
     </script>
 </head>
 <body>
-<th:block th:include="storage/fragments/menu :: menu"/>
+<th:block th:include="shop/fragments/menu :: menu"/>
 <div class="container" style="margin-top: 25px;">
-    <p class="text-center h1">Item List</p>
+    <p class="text-center h1">Cart</p>
     <table id="item_table" class="display" style="width: 100%">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Description</th>
-            <th>Quantity</th>
             <th>Price</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${items}">
-            <td th:text="${item.id}">ID</td>
+        <tr th:each="item : ${cart.items}">
             <td th:text="${item.name}">Name</td>
             <td th:text="${item.desc}">Description</td>
-            <td th:text="${item.quantity}">Quantity</td>
             <td th:text="${item.price}">Price</td>
-            <td>
-                <button type="button" class="btn btn-warning btn-sm" th:onclick="|window.location.href='/storage/item/${item.id}/show'|">View</button>
-            </td>
         </tr>
         </tbody>
     </table>
+    <h3>Total:   <small class="text-muted" th:text="${cart.getItemTotalPrice()}">With faded secondary text</small>
+    </h3>
+    <form th:action="@{'/shop/cart/pay'}" method="post">
+        <button type="submit" class="btn btn-success btn-sm">Buy</button>
+    </form>
 </div>
 </body>
 </html>

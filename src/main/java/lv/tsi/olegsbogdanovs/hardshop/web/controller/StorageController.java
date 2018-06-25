@@ -2,6 +2,7 @@ package lv.tsi.olegsbogdanovs.hardshop.web.controller;
 
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.Category;
 import lv.tsi.olegsbogdanovs.hardshop.persistanse.domain.User;
+import lv.tsi.olegsbogdanovs.hardshop.service.CartService;
 import lv.tsi.olegsbogdanovs.hardshop.service.CategoryService;
 import lv.tsi.olegsbogdanovs.hardshop.service.ItemService;
 import lv.tsi.olegsbogdanovs.hardshop.web.dto.CategoryDto;
@@ -20,22 +21,25 @@ import javax.validation.Valid;
 @Controller
 public class StorageController extends WebMvcConfigurerAdapter {
     private CategoryService categoryService;
+    private CartService cartService;
     private static final Logger logger = LoggerFactory.getLogger(StorageController.class);
     private ItemService itemService;
 
 
-    public StorageController(CategoryService categoryService, ItemService itemService) {
+    public StorageController(CategoryService categoryService, CartService cartService, ItemService itemService) {
         this.categoryService = categoryService;
+        this.cartService = cartService;
         this.itemService = itemService;
     }
 
     @GetMapping("/storage")
-    public String getAdminView(Model model){
+    public String getStorageView(Model model){
+        model.addAttribute("carts", cartService.getAllPaidCarts());
         return "storage/storage";
     }
 
     @GetMapping("/storage/category/create")
-    public String categoryCreate(Model model){
+    public String getAddCategoryView(Model model){
         model.addAttribute("category", new CategoryDto());
         return "storage/category_create";
     }
@@ -51,13 +55,13 @@ public class StorageController extends WebMvcConfigurerAdapter {
     }
 
     @GetMapping("/storage/category/{id}/show")
-    public String categoryShow(Model model, @PathVariable Long id){
+    public String getCategoryView(Model model, @PathVariable Long id){
         model.addAttribute("category", categoryService.findDtoById(id));
         return "storage/category_show";
     }
 
     @GetMapping("/storage/category/list")
-    public String categoryShow(Model model){
+    public String getListCategoryView(Model model){
         model.addAttribute("categories", categoryService.getCategories());
         return "storage/category_list";
     }
@@ -91,7 +95,7 @@ public class StorageController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/storage/item")
-    public String itemSave(@Valid @ModelAttribute("item") ItemDto itemDto, BindingResult bindingResult){
+    public String saveItem(@Valid @ModelAttribute("item") ItemDto itemDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return "storage/item_create";
         }
@@ -101,14 +105,14 @@ public class StorageController extends WebMvcConfigurerAdapter {
 
 
     @GetMapping("/storage/item/{id}/show")
-    public String showItem(Model model, @PathVariable Long id){
+    public String getItemView(Model model, @PathVariable Long id){
         ItemDto itemDto = itemService.findDtoById(id);
         model.addAttribute("item", itemDto);
         return "storage/item_show";
     }
 
     @GetMapping("/storage/item/list")
-    public String listItem(Model model){
+    public String getItemListView(Model model){
         model.addAttribute("items", itemService.getItems());
         return "storage/item_list";
     }

@@ -85,6 +85,14 @@ public class ItemService {
         return items;
     }
 
+    public Item getItemById(Long id){
+        Item item = itemDao.findOne(id);
+        if (item == null){
+            throw new NotFoundException("Item Not Found. For ID value: " + id.toString());
+        }
+        return item;
+    }
+
     public Set<Item> getItemsByCategoryId(Long id){
         Set<Item> items = new HashSet<>();
         itemDao.findItemsByCategoryId(id).forEach(items::add);

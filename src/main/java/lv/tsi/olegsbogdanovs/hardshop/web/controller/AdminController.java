@@ -37,13 +37,13 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     @GetMapping("/admin/user/create")
-    public String createAnyUserView(Model model){
+    public String getCreateUserView(Model model){
         model.addAttribute("user", new UserDto());
         return "admin/user_add";
     }
 
     @GetMapping("/admin/user/{userId}/modify")
-    public String modifyAnyUserView(Model model, @PathVariable String userId){
+    public String getModifyUserView(Model model, @PathVariable String userId){
         User user = userService.getUserById(Long.parseLong(userId));
         UserUpdateDto userUpdateDto = new UserUpdateDto();
         userUpdateDto.setEmail(user.getEmail());
@@ -56,7 +56,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/admin/user/{userId}/modify")
-    public String modifyUserAccount(@ModelAttribute("user") @Valid UserUpdateDto userUpdateDto,
+    public String modifyUser(@ModelAttribute("user") @Valid UserUpdateDto userUpdateDto,
                                    @PathVariable String userId,
                                    BindingResult bindingResult){
         logger.info (userUpdateDto == null? "NULL": userUpdateDto.toString());
@@ -75,7 +75,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
     }
 
     @PostMapping("/admin/user/create")
-    public String registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult){
+    public String saveUserAccount(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult){
         User registeredUser = new User();
         if (!bindingResult.hasErrors()){
             registeredUser = createUserAccount(userDto, bindingResult);
@@ -97,28 +97,7 @@ public class AdminController extends WebMvcConfigurerAdapter {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    @GetMapping("/user/registration")
-    public String getRegistrationForm(Model model) {
-        model.addAttribute("user", new UserDto());
-        return "registration";
-    }
 
-    @PostMapping("/user/registration")
-    public String registerCustomerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, BindingResult bindingResult) {
-        User registeredUser = new User();
-        userDto.setRole(Role.CUSTOMER);
-        if (!bindingResult.hasErrors()){
-            registeredUser = createUserAccount(userDto, bindingResult);
-        }
-        if (registeredUser == null){
-            bindingResult.rejectValue("email", "message.emailRegError");
-        }
-        if (bindingResult.hasErrors()) {
-            return "registration";
-        } else {
-            return "redirect:/";
-        }
-    }
 
     private User createUserAccount(UserDto userDto, BindingResult bindingResult){
         User registered = null;

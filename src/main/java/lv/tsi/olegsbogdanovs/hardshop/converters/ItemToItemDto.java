@@ -20,6 +20,7 @@ public class ItemToItemDto implements Converter<Item, ItemDto> {
         itemDto.setName(source.getName());
         itemDto.setQuantity(source.getQuantity());
         itemDto.setDesc(source.getDesc());
+        itemDto.setPrice(source.getPrice());
         if (source.getCategory() != null) {
             itemDto.setCategoryId(source.getCategory().getId());
         }

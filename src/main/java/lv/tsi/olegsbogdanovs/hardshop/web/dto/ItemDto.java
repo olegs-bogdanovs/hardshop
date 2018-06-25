@@ -17,6 +17,8 @@ public class ItemDto {
     @Size(min = 3, max = 99)
     private String name;
 
+    private Double price;
+
     private List<ItemParameterValueDto> values = new ArrayList<>();
 
     public Long getId() {
@@ -61,6 +63,14 @@ public class ItemDto {
 
     public List<ItemParameterValueDto> getValues() {
         return values;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public void setValues(List<ItemParameterValueDto> values) {

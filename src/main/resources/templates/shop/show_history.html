@@ -3,7 +3,7 @@
       xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <title>Storage</title>
+    <title>Hardshop - Cart</title>
     <th:block th:include="storage/fragments/header :: header"/>
     <script>
         $(document).ready(function () {
@@ -12,20 +12,20 @@
     </script>
 </head>
 <body>
-<th:block th:include="storage/fragments/menu :: menu"/>
+<th:block th:include="shop/fragments/menu :: menu"/>
 <div class="container" style="margin-top: 25px;">
-    <p class="text-center h1">Paid Carts</p>
+    <p class="text-center h1">Cart</p>
     <table id="item_table" class="display" style="width: 100%">
         <thead>
         <tr>
-            <th>UserId</th>
+            <th>Id</th>
             <th>Total Price</th>
             <th>Status</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="cart : ${carts}">
-            <td th:text="${cart.user.email}">Id</td>
+            <td th:text="${cart.id}">Id</td>
             <td th:text="${cart.getItemTotalPrice()}">Total Price</td>
             <td th:text="${cart.status}">Status</td>
         </tr>

@@ -12,11 +12,9 @@ public class Item {
     private Integer quantity;
     private String name;
     private String desc;
+    private Double price;
 
-    @ManyToMany
-    @JoinTable(name="item_cart",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    @ManyToMany(mappedBy = "items")
     private Set<Cart> carts = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
@@ -96,5 +94,11 @@ public class Item {
         this.desc = desc;
     }
 
+    public Double getPrice() {
+        return price;
+    }
 
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }
